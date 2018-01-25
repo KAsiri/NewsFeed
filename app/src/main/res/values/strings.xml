@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">News Feed</string>
+    <string name="Key">https://content.guardianapis.com/search?api-key=20c97de9-c4d9-48f2-a26c-be0282e5d185&amp;show-references=author&amp;order-date=published</string>
+    <string name="title">Title</string>
+    <string name="date">Date</string>
+    <string name="section">Section</string>
+    <string name="author">Author</string>
+    <string name="noConn">No Connection</string>
+</resources>
