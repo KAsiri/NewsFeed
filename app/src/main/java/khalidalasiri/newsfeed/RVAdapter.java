@@ -1,11 +1,14 @@
 package khalidalasiri.newsfeed;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 
 import java.util.List;
 
@@ -35,6 +38,7 @@ class RVAdapter extends RecyclerView.Adapter<RVAdapter.VH> {
         holder.title.setText(newsList.get(position).getTitle());
         holder.section.setText(newsList.get(position).getSection());
         holder.author.setText(newsList.get(position).getAuthor());
+        holder.url = newsList.get(position).getUrl();
 
     }
 
@@ -43,11 +47,12 @@ class RVAdapter extends RecyclerView.Adapter<RVAdapter.VH> {
         return newsList.size();
     }
 
-    public class VH extends RecyclerView.ViewHolder {
+    public class VH extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView date;
         TextView title;
         TextView section;
         TextView author;
+        String url;
 
         public VH(View itemView) {
             super(itemView);
@@ -55,6 +60,14 @@ class RVAdapter extends RecyclerView.Adapter<RVAdapter.VH> {
             title = itemView.findViewById(R.id.title);
             section = itemView.findViewById(R.id.section);
             author = itemView.findViewById(R.id.author);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            Uri uri = Uri.parse(url);
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            context.startActivity(intent);
         }
     }
 }

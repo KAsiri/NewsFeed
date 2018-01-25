@@ -22,13 +22,12 @@
     </android.support.v7.widget.RecyclerView>
 
     <TextView
-        android:id="@+id/notConnecte"
+        android:id="@+id/message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="492dp"
         android:layout_marginTop="8dp"
         android:visibility="invisible"
-        android:text="@string/noConn"
         app:layout_constraintBottom_toBottomOf="@+id/recyclerView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"

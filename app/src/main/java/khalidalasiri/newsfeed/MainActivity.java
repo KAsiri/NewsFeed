@@ -9,7 +9,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -20,43 +19,46 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     RecyclerView recyclerView;
     RVAdapter rvAdapter;
-    TextView notConnecte;
+    TextView message;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        notConnecte = findViewById(R.id.notConnecte);
+        message = findViewById(R.id.message);
         ConnectivityManager cm = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
         NetworkInfo ni = null;
         if (cm != null) {
             ni = cm.getActiveNetworkInfo();
 
             if (ni != null && ni.isConnected()) {
-                //Log.d("print", "Connected");
                 recyclerView = findViewById(R.id.recyclerView);
                 recyclerView.setLayoutManager(new LinearLayoutManager(this));
                 rvAdapter = new RVAdapter(this, new ArrayList<News>());
                 recyclerView.setAdapter(rvAdapter);
                 getSupportLoaderManager().initLoader(0, null, this).forceLoad();
             } else {
-                //Log.d("print", "Not Connected");
-                notConnecte.setVisibility(View.VISIBLE);
+                message.setText(R.string.noConn);
+                message.setVisibility(View.VISIBLE);
+
             }
         }
     }
 
     @Override
     public Loader<List<News>> onCreateLoader(int i, Bundle bundle) {
-        //Log.d("print", "onCreateLoader");
         return new NewsLoader(MainActivity.this);
     }
 
     @Override
     public void onLoadFinished(Loader<List<News>> loader, List<News> newsList) {
-        //Log.d("print", "onLoadFinished");
-        rvAdapter = new RVAdapter(this, newsList);
-        recyclerView.setAdapter(rvAdapter);
+        if (newsList.isEmpty()) {
+            message.setText(R.string.empty);
+            message.setVisibility(View.VISIBLE);
+        } else {
+            rvAdapter = new RVAdapter(this, newsList);
+            recyclerView.setAdapter(rvAdapter);
+        }
 
     }
 

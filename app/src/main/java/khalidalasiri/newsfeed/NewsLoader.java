@@ -38,6 +38,8 @@ public class NewsLoader extends AsyncTaskLoader<List<News>> {
         try {
             URL url = new URL(key);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setReadTimeout(10000);
+            conn.setConnectTimeout(15000);
             conn.setRequestMethod("GET");
             conn.connect();
 
@@ -74,7 +76,8 @@ public class NewsLoader extends AsyncTaskLoader<List<News>> {
                 News news = new News(article.getString("webTitle"),
                         article.getString("sectionName"),
                         author,
-                        article.getString("webPublicationDate"));
+                        article.getString("webPublicationDate"),
+                        article.getString("webUrl"));
                 newsList.add(news);
             }
 
