@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="sectionNames">
+        <item>All</item>
+        <item>Business</item>
+        <item>Football</item>
+        <item>Sport</item>
+        <item>Technology</item>
+        <item>Science</item>
+    </string-array>
+    <string-array name="sectionValues">
+        <item>-b</item>
+        <item>business</item>
+        <item>football</item>
+        <item>sport</item>
+        <item>technology</item>
+        <item>science</item>
+    </string-array>
+</resources>
