@@ -7,4 +7,18 @@
     <string name="author">Author</string>
     <string name="noConn">No Connection</string>
     <string name="empty">The List is Empty</string>
+
+    <string name="setting">Settings</string>
+    <string name="pageNum">The Page Number</string>
+    <string name="keyPage" translatable="false">pageNum</string>
+    <string name="defPage" translatable="false">1</string>
+
+    <string name="resultNum">The result per page</string>
+    <string name="keyResult" translatable="false">resultNum</string>
+    <string name="defResult" translatable="false">10</string>
+
+    <string name="listSection">News Section</string>
+    <string name="keySection">keySection</string>
+    <string name="summrySection">Select the Section you want to read</string>
+    <string name="allSection">\-b</string>
 </resources>

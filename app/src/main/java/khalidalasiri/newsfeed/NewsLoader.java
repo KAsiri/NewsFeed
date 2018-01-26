@@ -1,5 +1,8 @@
 package khalidalasiri.newsfeed;
 
+import android.content.SharedPreferences;
+import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.content.Context;
 
@@ -13,6 +16,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 
+import java.net.URI;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
@@ -25,9 +29,12 @@ import java.util.List;
 public class NewsLoader extends AsyncTaskLoader<List<News>> {
 
     String key;
+    String uriKey;
+    Context context;
 
     public NewsLoader(Context context) {
         super(context);
+        this.context = context;
         key = context.getResources().getString(R.string.Key);
     }
 
@@ -36,7 +43,10 @@ public class NewsLoader extends AsyncTaskLoader<List<News>> {
         List<News> newsList = new ArrayList<>();
 
         try {
-            URL url = new URL(key);
+            uriBuild(key);
+
+
+            URL url = new URL(uriKey);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setReadTimeout(10000);
             conn.setConnectTimeout(15000);
@@ -48,6 +58,7 @@ public class NewsLoader extends AsyncTaskLoader<List<News>> {
             BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
             StringBuilder builder = new StringBuilder();
             String line;
+
 
             while ((line = bufferedReader.readLine()) != null) {
                 builder.append(line);
@@ -87,5 +98,25 @@ public class NewsLoader extends AsyncTaskLoader<List<News>> {
             e.printStackTrace();
         }
         return newsList;
+    }
+
+    public String uriBuild(String key) {
+
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+        String numPages = sharedPrefs.getString(context.getString(R.string.keyPage), context.getString(R.string.defPage));
+        String resultNum = sharedPrefs.getString(context.getString(R.string.keyResult), context.getString(R.string.defResult));
+        String section = sharedPrefs.getString(context.getString(R.string.keySection), context.getString(R.string.allSection));
+
+        Uri baseUri = Uri.parse(key);
+
+        Uri.Builder uriBuilder = baseUri.buildUpon();
+
+        uriBuilder.appendQueryParameter("page", numPages);
+        uriBuilder.appendQueryParameter("page-size", resultNum);
+        uriBuilder.appendQueryParameter("section", section);
+
+        uriKey = uriBuilder.toString();
+
+        return uriKey;
     }
 }
